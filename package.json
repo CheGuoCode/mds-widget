@@ -1,0 +1,22 @@
+{
+  "name": "mds-widget",
+  "version": "1.0.0",
+  "description": "mds-widget",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CheGuoCode/mds-widget.git"
+  },
+  "keywords": [
+    "mds"
+  ],
+  "author": "chia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CheGuoCode/mds-widget/issues"
+  },
+  "homepage": "https://github.com/CheGuoCode/mds-widget#readme"
+}
