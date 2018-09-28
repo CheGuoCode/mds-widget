@@ -55,6 +55,57 @@ Storage.install = (Vue, options) => {
         removeAllSync () {
             const { status,code } = storage.removeDataSync()
             return status === 0 || code === 0
+        },
+        setGlobal (key, value, callback) {
+            return new Promise((resolve, reject) => {
+                storage.setGlobalData(key.toString(), JSON.stringify(value), ({ status,code, data, errorMsg }) => {
+                    _isFunction(callback) && callback.call(this, status === 0 || code === 0)
+                    status === 0 || code === 0 ? resolve(true) : reject(false)
+                })
+            })
+        },
+        setGlobalSync (key, value) {
+            return storage.setDataSync(key.toString(), JSON.stringify(value))
+        },
+        getGlobal (key, callback) {
+            return new Promise((resolve, reject) => {
+                storage.getGlobalData(key.toString(), ({ status,code, data, errorMsg }) => {
+                    _isFunction(callback) && callback.call(this, status === 0 || code === 0)
+                    status === 0 || code === 0 ? resolve(JSON.parse(data)) : reject(false)
+                })
+            })
+        },
+        getGlobalSync (key) {
+            const { status,code, data } = storage.getGlobalDataSync(key.toString())
+            if(typeof(data) =='string'){
+                return status === 0 || code == 0 ? JSON.parse(data) : {}
+            }else{
+                return status === 0 || code == 0 ? data : {}
+            }
+        },
+        deleteGlobal (key, callback) {
+            return new Promise((resolve, reject) => {
+                storage.deleteGlobalData(key.toString(), ({ status,code, data, errorMsg }) => {
+                    _isFunction(callback) && callback.call(this, status === 0 || code === 0)
+                    status === 0 || code === 0 ? resolve(true) : reject(false)
+                })
+            })
+        },
+        deleteGlobalSync (key) {
+            const { status,code } = storage.deleteGlobalDataSync(key.toString())
+            return status === 0 || code === 0
+        },
+        removeGlobal (callback) {
+            return new Promise((resolve, reject) => {
+                storage.removeGlobalData(({ status,code, data, errorMsg }) => {
+                    _isFunction(callback) && callback.call(this, status === 0 || code === 0)
+                    status === 0 || code === 0 ? resolve(true) : reject(false)
+                })
+            })
+        },
+        removeGlobalSync () {
+            const { status,code } = storage.removeGlobalDataSync()
+            return status === 0 || code === 0
         }
     }
 }
