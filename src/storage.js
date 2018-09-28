@@ -65,7 +65,7 @@ Storage.install = (Vue, options) => {
             })
         },
         setGlobalSync (key, value) {
-            return storage.setDataSync(key.toString(), JSON.stringify(value))
+            return storage.setGlobalDataSync(key.toString(), JSON.stringify(value))
         },
         getGlobal (key, callback) {
             return new Promise((resolve, reject) => {
