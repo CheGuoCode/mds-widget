@@ -27,7 +27,13 @@ Storage.install = (Vue, options) => {
         getSync (key) {
             const { status,code, data } = storage.getDataSync(key.toString())
             if(typeof(data) =='string'){
-                return status === 0 || code == 0 ? JSON.parse(data) : {}
+                var val;
+                try {
+                    val = JSON.parse(data);
+                } catch (error) {
+                    val = data;
+                }
+                return status === 0 || code == 0 ? val : {}
             }else{
                 return status === 0 || code == 0 ? data : {}
             }
@@ -78,7 +84,13 @@ Storage.install = (Vue, options) => {
         getGlobalSync (key) {
             const { status,code, data } = storage.getGlobalDataSync(key.toString())
             if(typeof(data) =='string'){
-                return status === 0 || code == 0 ? JSON.parse(data) : {}
+                var val;
+                try {
+                    val = JSON.parse(data);
+                } catch (error) {
+                    val = data;
+                }
+                return status === 0 || code == 0 ? val : {}
             }else{
                 return status === 0 || code == 0 ? data : {}
             }
