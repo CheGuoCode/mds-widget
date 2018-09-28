@@ -95,7 +95,7 @@ Storage.install = (Vue, options) => {
             const { status,code } = storage.deleteGlobalDataSync(key.toString())
             return status === 0 || code === 0
         },
-        removeGlobal (callback) {
+        removeAllGlobal (callback) {
             return new Promise((resolve, reject) => {
                 storage.removeGlobalData(({ status,code, data, errorMsg }) => {
                     _isFunction(callback) && callback.call(this, status === 0 || code === 0)
@@ -103,7 +103,7 @@ Storage.install = (Vue, options) => {
                 })
             })
         },
-        removeGlobalSync () {
+        removeAllGlobalSync () {
             const { status,code } = storage.removeGlobalDataSync()
             return status === 0 || code === 0
         }
