@@ -54,64 +54,6 @@ Tools.install = (Vue, options) => {
                     status === 0 || code === 0 ? resolve(data) : reject({ status, code, errorMsg, data })
                 })
             })
-        },
-
-        // 获取 导航 Bar 高度
-        getNavBarHeight(callback) {
-            return new Promise((resolve, reject) => {
-                tools.navBarHeight(resData => {
-                    if (isFunction(callback)) {
-                        callback.call(this, resData)
-                    }
-                    if (resData && resData.code == 0) {
-                        resolve(resData)
-                    } else {
-                        reject(resData)
-                    }
-                })
-            });
-        },
-
-        // 获取 状态栏 Bar 高度
-        getStatusBarHeight(callback) {
-            return new Promise((resolve, reject) => {
-                tools.statusBarHeight(resData => {
-                    if (isFunction(callback)) {
-                        callback.call(this, resData)
-                    }
-                    if (resData && resData.code == 0) {
-                        resolve(resData)
-                    } else {
-                        reject(resData)
-                    }
-                })
-            });
-
-        },
-
-        // 获取 导航栏 + 状态栏 高度
-        getNavHeight(callback) {
-            return new Promise((resolve, reject) => {
-                tools.navHeight(resData => {
-                    if (isFunction(callback)) {
-                        callback.call(this, resData)
-                    }
-                    if (resData && resData.code == 0) {
-                        resolve(resData)
-                    } else {
-                        reject(resData)
-                    }
-                })
-            });
-
-        },
-
-        scan () {
-            return new Promise((resolve, reject) => {
-                tools.scan(({ status, code, errorMsg, data }) => {
-                    status === 0 || code === 0 ? resolve(data) : reject({ status, code, errorMsg, data })
-                })
-            })
         }
     }
 

@@ -12,8 +12,12 @@ QRCode.install = (Vue, options) => {
         /**
          * 扫描二维码
          */
-        scanQRCode() {
-            qrcode.scanQRCode()
+        scan() {
+            return new Promise((resolve, reject) => {
+                qrcode.scan(({ status, code, errorMsg, data }) => {
+                    status === 0 || code === 0 ? resolve(data) : reject({ status, code, errorMsg, data })
+                })
+            })
         },
 
         /**
