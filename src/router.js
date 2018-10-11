@@ -145,6 +145,9 @@ export default class Router {
                 if (!url) return
                 router.openBrowser(url)
             },
+            openSystemMap(options,callback){
+                router.openSystemMap(options,callback);
+            },
             setHomePage (url = '') {
                 router.setHomePage(url)
             },
