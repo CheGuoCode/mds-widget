@@ -1,13 +1,12 @@
-
 const tools = weex.requireModule('mdsTool')
 const Tools = Object.create(null)
 
 Tools.install = (Vue, options) => {
     Vue.prototype.$tools = {
-        resignKeyboard () {
+        resignKeyboard() {
             return new Promise((resolve, reject) => {
-                tools.resignKeyboard(({ status, code, errorMsg, data }) => {
-                    status === 0 || code === 0 ? resolve(data) : reject({ status, code, errorMsg, data })
+                tools.resignKeyboard(({status, code, errorMsg, data}) => {
+                    status === 0 || code === 0 ? resolve(data) : reject({status, code, errorMsg, data})
                 })
             })
         },
@@ -31,13 +30,13 @@ Tools.install = (Vue, options) => {
         // },
 
         networkStatus() {
-             return tools.networkStatus()
+            return tools.networkStatus()
         },
 
         watchNetworkStatus() {
             return new Promise((resolve, reject) => {
-                tools.watchNetworkStatus(({ status, code, errorMsg, data }) => {
-                    status === 0 || code === 0 ? resolve(data) : reject({ status, code, errorMsg, data })
+                tools.watchNetworkStatus(({status, code, errorMsg, data}) => {
+                    status === 0 || code === 0 ? resolve(data) : reject({status, code, errorMsg, data})
                 })
             })
         },
@@ -48,10 +47,18 @@ Tools.install = (Vue, options) => {
         },
 
         // 复制内容到剪切板
-        copyString (string) {
+        copyString(string) {
             return new Promise((resolve, reject) => {
-                tools.copyString(string, ({ status, code, errorMsg, data }) => {
-                    status === 0 || code === 0 ? resolve(data) : reject({ status, code, errorMsg, data })
+                tools.copyString(string, ({status, code, errorMsg, data}) => {
+                    status === 0 || code === 0 ? resolve(data) : reject({status, code, errorMsg, data})
+                })
+            })
+        },
+        downloadFile(options, callback) {
+            options = options || {};
+            return new Promise((resolve, reject) => {
+                tools.downloadFile(string, ({status, code, errorMsg, data}) => {
+                    status === 0 || code === 0 ? resolve(data) : reject({status, code, errorMsg, data})
                 })
             })
         }
