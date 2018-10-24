@@ -19,20 +19,16 @@ export const DEFAULT_ANIMATETYPE = 'PUSH'
 
 
 export default class Router {
-    constructor ({ routes , appid }) {
+    constructor ({ routes }) {
         this.routes = routes
-        this.appid = appid;
         return this
     }
     install (Vue, options) {
         const self = this
         Vue.prototype.$router = {
             open (options = {}) {
-                var currentPageInfo = options.url;
-                if(!currentPageInfo){
-                    currentPageInfo =  this.getUrl(options.name)
-                }
 
+                var currentPageInfo =  this.getUrl(options.name)
                 if (!currentPageInfo ) return;
 
                 options.navShow = _isUndefined(options.navShow) ?
@@ -40,7 +36,6 @@ export default class Router {
                     : options.navShow;
 
                     console.log('URL === ',currentPageInfo.url);
-                    console.log('appid === ',self.appid);
 
 
 
@@ -55,8 +50,7 @@ export default class Router {
                         gesBack: _isUndefined(options.gesBack) || options.gesBack,
                         navShow: options.navShow,
                         navTitle: options.navTitle || currentPageInfo.title,
-                        isRunBackCallback: isFunction(options.backCallback),
-                        appId:self.appid
+                        isRunBackCallback: isFunction(options.backCallback)
                     }
 
                     if(!!options.statusBarStyle)  preOptions.statusBarStyle = options.statusBarStyle
