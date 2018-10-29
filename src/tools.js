@@ -57,7 +57,7 @@ Tools.install = (Vue, options) => {
         downloadFile(options, callback) {
             options = options || {};
             return new Promise((resolve, reject) => {
-                tools.downloadFile(string, ({status, code, errorMsg, data}) => {
+                tools.downloadFile(options, ({status, code, errorMsg, data}) => {
                     status === 0 || code === 0 ? resolve(data) : reject({status, code, errorMsg, data})
                 })
             })
