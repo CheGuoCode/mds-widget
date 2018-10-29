@@ -19,29 +19,29 @@ export const DEFAULT_ANIMATETYPE = 'PUSH'
 
 
 export default class Router {
-    constructor ({ routes }) {
+    constructor({routes}) {
         this.routes = routes
         return this
     }
-    install (Vue, options) {
+
+    install(Vue, options) {
         const self = this
         Vue.prototype.$router = {
-            open (options = {}) {
+            open(options = {}) {
 
-                var currentPageInfo =  this.getUrl(options.name)
-                if (!currentPageInfo ) return;
+                var currentPageInfo = this.getUrl(options.name)
+                if (!currentPageInfo) return;
 
                 options.navShow = _isUndefined(options.navShow) ?
                     (_isUndefined(currentPageInfo.navShow) ? true : currentPageInfo.navShow)
                     : options.navShow;
 
-                    console.log('URL === ',currentPageInfo.url);
-
+                console.log('URL === ', currentPageInfo.url);
 
 
                 return new Promise((resolve, reject) => {
                     let preOptions = {
-                        url: options.url ||currentPageInfo.url|| '',
+                        url: options.url || currentPageInfo.url || '',
                         iOS: options.iOS || currentPageInfo.iOS || '',
                         android: options.android || currentPageInfo.android || '',
                         type: options.type || DEFAULT_ANIMATETYPE,
@@ -53,8 +53,8 @@ export default class Router {
                         isRunBackCallback: isFunction(options.backCallback)
                     }
 
-                    if(!!options.statusBarStyle)  preOptions.statusBarStyle = options.statusBarStyle
-                    if(!!options.backgroundColor)  preOptions.backgroundColor = options.backgroundColor
+                    if (!!options.statusBarStyle) preOptions.statusBarStyle = options.statusBarStyle
+                    if (!!options.backgroundColor) preOptions.backgroundColor = options.backgroundColor
                     router.open(preOptions, (data) => {
                         if (isFunction(options.backCallback)) {
                             options.backCallback.call(this, data)
@@ -62,7 +62,7 @@ export default class Router {
                     })
                 })
             },
-            back (options = {}) {
+            back(options = {}) {
                 return new Promise((resolve, reject) => {
                     router.back({
                         type: options.type || DEFAULT_ANIMATETYPE,
@@ -75,7 +75,7 @@ export default class Router {
                     })
                 })
             },
-            getParams (callback) {
+            getParams(callback) {
                 return new Promise((resolve, reject) => {
                     router.getParams((params) => {
                         if (isFunction(callback)) {
@@ -85,7 +85,7 @@ export default class Router {
                     })
                 })
             },
-            getUrl (page) {
+            getUrl(page) {
                 const currentPageInfo = self.routes[page]
                 if (!currentPageInfo) {
                     modal.alert({
@@ -96,26 +96,46 @@ export default class Router {
                 }
                 return currentPageInfo
             },
-            refresh () {
+            refresh() {
                 router.refreshWeex()
             },
-            setBackParams (params) {
+            setBackParams(params) {
                 _isNumber(params) && params.toString()
                 storage.setData('router.backParams', JSON.stringify(params))
             },
-            toWebView (params) {
-                if (!params.url) return
-                params.title = params.title || ''
-                    // params.shareInfo = {
-                    //     title: params.shareTitle,
-                    //     content: params.content || '',
-                    //     image: params.image || '',
-                    //     url: params.url || '',
-                    //     platforms: params.platforms || [] // 传空的话默认全部
-                    // }
-                router.toWebView(params)
+            toWebView(params) {
+                if (!params.url) {
+                    return
+                }
+                params.title = params.title || '加载中...'
+                params.navShow = _isUndefined(params.navShow) ? true : params.navShow
+                params.backHookInUrl = params.backHookInUrl == null ? "" : params.backHookInUrl
+                if (params.backCallback) {
+                    router.toWebView(
+                        params,
+                        (data) => {
+                            if (isFunction(params.navCallback)) {
+                                params.navCallback.call(this, data)
+                            }
+                        },
+                        (data) => {
+                            if (isFunction(params.backCallback)) {
+                                params.backCallback.call(this, data)
+                            }
+                        },
+                    )
+                } else {
+                    router.toWebView(
+                        params,
+                        (data) => {
+                            if (isFunction(params.navCallback)) {
+                                params.navCallback.call(this, data)
+                            }
+                        }
+                    )
+                }
             },
-            toMap (options) {
+            toMap(options) {
                 // options = {
                 //     type:'NAVIGATION', //type类型：NAVIGATION(表现方式为：地图上添加起点终点标示大头针，终点标示上面有个导航的按钮)
                 //     title: '页面标题', //页面标题
@@ -135,17 +155,17 @@ export default class Router {
                     })
                 }
             },
-            openBrowser (url = '') {
+            openBrowser(url = '') {
                 if (!url) return
                 router.openBrowser(url)
             },
-            openSystemMap(options,callback){
-                router.openSystemMap(options,callback);
+            openSystemMap(options, callback) {
+                router.openSystemMap(options, callback);
             },
-            setHomePage (url = '') {
+            setHomePage(url = '') {
                 router.setHomePage(url)
             },
-            finish () {
+            finish() {
                 router.finish()
             }
         }
