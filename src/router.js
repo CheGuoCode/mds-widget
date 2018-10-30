@@ -28,16 +28,16 @@ export default class Router {
         const self = this
         Vue.prototype.$router = {
             open(options = {}) {
-
-                var currentPageInfo = this.getUrl(options.name)
-                if (!currentPageInfo) return;
+                
+                var currentPageInfo = options.url;
+                if(!currentPageInfo){
+                    currentPageInfo =  this.getUrl(options.name)
+                }
+                if (!currentPageInfo ) return;
 
                 options.navShow = _isUndefined(options.navShow) ?
                     (_isUndefined(currentPageInfo.navShow) ? true : currentPageInfo.navShow)
                     : options.navShow;
-
-                console.log('URL === ', currentPageInfo.url);
-
 
                 return new Promise((resolve, reject) => {
                     let preOptions = {
