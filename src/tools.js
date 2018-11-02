@@ -1,5 +1,6 @@
 const tools = weex.requireModule('mdsTool')
 const Tools = Object.create(null)
+import isFunction from 'lodash/isFunction'
 
 Tools.install = (Vue, options) => {
     Vue.prototype.$tools = {
