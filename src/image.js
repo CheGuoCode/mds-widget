@@ -7,7 +7,7 @@ const Image = Object.create(null)
 Image.install = (Vue, options) => {
     Vue.prototype.$image = {
         // upload change to pickAndUpload
-        pickAndUpload ({ maxCount = 1, imageWidth = 0, url = '', allowCrop = false, header = {}, params = {}}) {
+        pickAndUpload ({ mediaType='', maxCount = 1, imageWidth = 0, url = '', allowCrop = false, header = {}, params = {}}) {
             return new Promise((resolve, reject) => {
                 var _params = {
                         mediaType,
