@@ -10,6 +10,7 @@ Image.install = (Vue, options) => {
         pickAndUpload ({ maxCount = 1, imageWidth = 0, url = '', allowCrop = false, header = {}, params = {}}) {
             return new Promise((resolve, reject) => {
                 var _params = {
+                        mediaType,
                         maxCount,
                         imageWidth,
                         allowCrop,
